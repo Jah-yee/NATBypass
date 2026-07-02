@@ -145,7 +145,7 @@ func port2port(port1 string, port2 string) {
 		conn1 := accept(listen1)
 		conn2 := accept(listen2)
 		if conn1 == nil || conn2 == nil {
-			log.Println("[x]", "accept client faild. retry in ", timeout, " seconds. ")
+			log.Println("[x]", "accept client failed. retry in ", timeout, " seconds. ")
 			time.Sleep(timeout * time.Second)
 			continue
 		}
@@ -166,7 +166,7 @@ func port2host(allowPort string, targetAddress string) {
 			target, err := net.Dial("tcp", targetAddress)
 			if err != nil {
 				// temporarily unavailable, don't use fatal.
-				log.Println("[x]", "connect target address ["+targetAddress+"] faild. retry in ", timeout, "seconds. ")
+				log.Println("[x]", "connect target address ["+targetAddress+"] failed. retry in ", timeout, "seconds. ")
 				conn.Close()
 				log.Println("[←]", "close the connect at local:["+conn.LocalAddr().String()+"] and remote:["+conn.RemoteAddr().String()+"]")
 				time.Sleep(timeout * time.Second)
@@ -189,7 +189,7 @@ func host2host(address1, address2 string) {
 				log.Println("[→]", "connect ["+address1+"] success.")
 				break
 			} else {
-				log.Println("[x]", "connect target address ["+address1+"] faild. retry in ", timeout, " seconds. ")
+				log.Println("[x]", "connect target address ["+address1+"] failed. retry in ", timeout, " seconds. ")
 				time.Sleep(timeout * time.Second)
 			}
 		}
@@ -199,7 +199,7 @@ func host2host(address1, address2 string) {
 				log.Println("[→]", "connect ["+address2+"] success.")
 				break
 			} else {
-				log.Println("[x]", "connect target address ["+address2+"] faild. retry in ", timeout, " seconds. ")
+				log.Println("[x]", "connect target address ["+address2+"] failed. retry in ", timeout, " seconds. ")
 				time.Sleep(timeout * time.Second)
 			}
 		}
@@ -211,7 +211,7 @@ func start_server(address string) net.Listener {
 	log.Println("[+]", "try to start server on:["+address+"]")
 	server, err := net.Listen("tcp", address)
 	if err != nil {
-		log.Fatalln("[x]", "listen address ["+address+"] faild.")
+		log.Fatalln("[x]", "listen address ["+address+"] failed.")
 	}
 	log.Println("[√]", "start listen at address:["+address+"]")
 	return server
@@ -222,7 +222,7 @@ func start_server(address string) net.Listener {
 		log.Println("accept a new client. remote address:[" + conn.RemoteAddr().String() +
 			"], local address:[" + conn.LocalAddr().String() + "]")
 		if err != nil {
-			log.Println("accept a new client faild.", err.Error())
+			log.Println("accept a new client failed.", err.Error())
 			continue
 		}
 		//go recvConnMsg(conn)
@@ -232,7 +232,7 @@ func start_server(address string) net.Listener {
 func accept(listener net.Listener) net.Conn {
 	conn, err := listener.Accept()
 	if err != nil {
-		log.Println("[x]", "accept connect ["+conn.RemoteAddr().String()+"] faild.", err.Error())
+		log.Println("[x]", "accept connect ["+conn.RemoteAddr().String()+"] failed.", err.Error())
 		return nil
 	}
 	log.Println("[√]", "accept a new client. remote address:["+conn.RemoteAddr().String()+"], local address:["+conn.LocalAddr().String()+"]")
